@@ -1,5 +1,18 @@
 # expenses-flutter-app
-A Flutter app to keep a track of expenses for any organization
+
+A Flutter app to keep track of expenses for any organization.
+
+This app will include features like:
+
+- Adding Transactions
+  
+- Categorizing expenses
+  
+- Track Regular Budget Limits
+
+- Visualize expense areas in form of Graphs and Bars
+
+- You can suggest interesting features by opening new issues too!
 
 ## Contribution Guidelines
 
