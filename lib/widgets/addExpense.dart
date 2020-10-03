@@ -82,8 +82,12 @@ class _AddExpenseWidgetState extends State<AddExpenseWidget> {
               borderRadius: BorderRadius.circular(18),
               child: InkWell(
                 onTap: (){
-                  _expenseListProvider.addToList(amount,item );
-                  Navigator.pop(context);
+                  if (amount == 0 || item == 'Empty') {
+                    _alertEmptyInput(amount == 0, item == 'Empty');
+                  } else {
+                    _expenseListProvider.addToList(amount,item);
+                    Navigator.pop(context);
+                  }
                 },
                 child: Container(
                   height: 60,
@@ -106,6 +110,34 @@ class _AddExpenseWidgetState extends State<AddExpenseWidget> {
           ],
         ),
       ),
+    );
+  }
+
+  Future<void> _alertEmptyInput(hasAmount, hasMessage) async {
+    String empty = '';
+    if (hasAmount) {
+      empty = 'amount';
+    } else {
+      empty = 'message';
+    }
+
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Bad Input'),
+          content: Text('You cannot leave ' + empty + ' empty!'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Understood'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
