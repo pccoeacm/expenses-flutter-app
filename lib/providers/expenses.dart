@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class Expenses with ChangeNotifier {
 
   List<Expense> _expenseList = [
-    Expense(amount: 1800, itemDescription: "Grocery Items",time:DateTime.now() ),
+    Expense(amount: 1800, itemDescription: "Grocery Items",time:DateTime.now(),tags:["food", "weekend"] ),
     Expense(amount: 120, itemDescription: "Stationary Items",time:DateTime.now() ),
     
   ];
