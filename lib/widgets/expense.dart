@@ -1,8 +1,9 @@
-
-import 'package:Expense/models/expense.dart';
+import 'package:Expense/data/models/expense.dart';
+import 'package:Expense/providers/expenses.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ExpenseWidget extends StatelessWidget {
   final Expense expense;
@@ -86,18 +87,30 @@ class ExpenseWidget extends StatelessWidget {
   }
 
   Widget _buildItemDisplay(BuildContext context) {
+    final _expensesProvider = Provider.of<Expenses>(context);
     return Container(
       margin: EdgeInsets.only(top: 2),
       width: double.infinity,
-      child: Text(
-        "${expense.itemDescription}",
-        textAlign: TextAlign.justify,
-        style: GoogleFonts.ubuntu(
-            textStyle: TextStyle(
-          color: Colors.black.withOpacity(0.8),
-          fontSize: 17,
-          fontWeight: FontWeight.w600,
-        )),
+      child: Row(
+        children: [
+          Text(
+            "${expense.itemDescription}",
+            textAlign: TextAlign.justify,
+            style: GoogleFonts.ubuntu(
+                textStyle: TextStyle(
+              color: Colors.black.withOpacity(0.8),
+              fontSize: 17,
+              fontWeight: FontWeight.w600,
+            )),
+          ),
+          InkWell(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Icon(Icons.save_alt, color: Color.fromRGBO(71, 8, 154, 1),),
+            ),
+            onTap: () => _expensesProvider.storeExpense(expense),
+          ),
+        ],
       ),
     );
   }

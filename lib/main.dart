@@ -1,3 +1,5 @@
+import 'package:Expense/data/db/app_database.dart';
+import 'package:Expense/data/db/dao/expense_dao.dart';
 import 'package:Expense/pages/home.dart';
 import 'package:Expense/providers/expenses.dart';
 import 'package:Expense/providers/search.dart';
@@ -18,7 +20,8 @@ class MyApp extends StatelessWidget {
     ]);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => Expenses()),
+        // TODO use a Dependency Injector patter to inject DAOs and DB class
+        ChangeNotifierProvider(create: (_) => Expenses(ExpenseDao(AppDatabase()))),
         ChangeNotifierProvider(create: (_) => Search()),
       ],
       child: MaterialApp(

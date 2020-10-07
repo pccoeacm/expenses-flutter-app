@@ -50,6 +50,7 @@ class HomePage extends StatelessWidget {
 
   Widget _buildAppBar(BuildContext context) {
     final _searchProvider = Provider.of<Search>(context);
+    final _expensesProvider = Provider.of<Expenses>(context);
     return AppBar(
       backgroundColor: Color.fromRGBO(71, 8, 154, 1),
       title: Text(
@@ -61,15 +62,16 @@ class HomePage extends StatelessWidget {
       centerTitle: true,
       actions: [
         IconButton(icon: Icon(Icons.search), onPressed: () => _searchProvider.toggleSearch()),
-        IconButton(icon: Icon(Icons.mode_edit), onPressed: () => addExpense(context))
+        IconButton(icon: Icon(Icons.storage), onPressed: () => _expensesProvider.loadStoredExpenses()),
+        IconButton(icon: Icon(Icons.cloud), onPressed: () => _expensesProvider.loadMockExpenseList()),
       ],
     );
   }
 
   Widget _buildBody(BuildContext context) {
     final _searchProvider = Provider.of<Search>(context);
-    final _expenseListProvider = Provider.of<Expenses>(context);
-    final _expenseTagList = _expenseListProvider.expenseList.expand((element) => element.tags).toSet();
+    final _expensesProvider = Provider.of<Expenses>(context);
+    final _expenseTagList = _expensesProvider.expenseList.expand((element) => element.tags).toSet();
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -113,11 +115,11 @@ class HomePage extends StatelessWidget {
     final _expenseListProvider = Provider.of<Expenses>(context);
     final List _expenseList = _expenseListProvider.getExpenseListFiltered(_searchProvider.queryTags);
     return ListView.builder(
-      itemCount: _expenseList.length,
-      itemBuilder: (_,index){
-        return ExpenseWidget(expense: _expenseList[index],);
-      }
-    );
+        itemCount: _expenseList.length,
+        itemBuilder: (_, index) => InkWell(
+              onLongPress: () => _expenseListProvider.storeExpense(_expenseList[index]),
+              child: ExpenseWidget(expense: _expenseList[index]),
+            ));
   }
 
   Widget _buildFloatingActionButton(BuildContext context) {
