@@ -1,5 +1,6 @@
 import 'package:Expense/pages/home.dart';
 import 'package:Expense/providers/expenses.dart';
+import 'package:Expense/providers/search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
@@ -15,8 +16,11 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return ChangeNotifierProvider(
-      create: (_) => Expenses(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Expenses()),
+        ChangeNotifierProvider(create: (_) => Search()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "Flutter",

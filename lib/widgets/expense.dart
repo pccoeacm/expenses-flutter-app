@@ -1,10 +1,10 @@
+
 import 'package:Expense/models/expense.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseWidget extends StatelessWidget {
-
   final Expense expense;
 
   ExpenseWidget({this.expense});
@@ -13,8 +13,8 @@ class ExpenseWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.only(top: 18,left: 18,right: 18,bottom: 10),
-      margin: EdgeInsets.only(left: 17,right: 17,top: 18),
+      padding: EdgeInsets.only(top: 18, left: 18, right: 18, bottom: 10),
+      margin: EdgeInsets.only(left: 17, right: 17, top: 18),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(1),
         borderRadius: BorderRadius.circular(18),
@@ -28,47 +28,60 @@ class ExpenseWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         _buildAmountDisplay(context),
-        _buildItemDisplay(context),  
-        _buildDateDisplay(context)
+        _buildItemDisplay(context),
+        _buildDateDisplay(context),
       ],
     );
   }
 
   Widget _buildAmountDisplay(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            "${expense.amount}",
-            style: TextStyle(
-              fontSize: 38,
-              fontWeight: FontWeight.w600,
-              color: Color.fromRGBO(71 , 8, 154, 1),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          "${expense.amount}",
+          style: TextStyle(
+            fontSize: 38,
+            fontWeight: FontWeight.w600,
+            color: Color.fromRGBO(71, 8, 154, 1),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.only(bottom: 7, left: 7),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                "RS",
+                style: TextStyle(
+                  fontSize: 18,
+                  letterSpacing: 1.2,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.black.withOpacity(0.6),
+                ),
+              )
+            ],
+          ),
+        ),
+        Expanded(
+          child: Container(
+            height: 50.0,
+            padding: EdgeInsets.only(bottom: 7, left: 7),
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: expense.tags.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Chip(label: Text(expense.tags[index])),
+                );
+              },
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(bottom: 7,left: 7),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  "RS",
-                  style: TextStyle(
-                    fontSize: 18,
-                    letterSpacing: 1.2,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black.withOpacity(0.6),
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -79,7 +92,8 @@ class ExpenseWidget extends StatelessWidget {
       child: Text(
         "${expense.itemDescription}",
         textAlign: TextAlign.justify,
-        style: GoogleFonts.ubuntu(textStyle: TextStyle(
+        style: GoogleFonts.ubuntu(
+            textStyle: TextStyle(
           color: Colors.black.withOpacity(0.8),
           fontSize: 17,
           fontWeight: FontWeight.w600,
@@ -102,7 +116,7 @@ class ExpenseWidget extends StatelessWidget {
               color: Color.fromRGBO(71, 8, 154, 1).withOpacity(0.8),
               borderRadius: BorderRadius.circular(18),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 8,vertical: 2),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             child: Text(
               "$newDtHour $newDt",
               style: TextStyle(
@@ -115,5 +129,4 @@ class ExpenseWidget extends StatelessWidget {
       ),
     );
   }
-
 }
