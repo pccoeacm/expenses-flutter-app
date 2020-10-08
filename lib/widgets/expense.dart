@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseWidget extends StatelessWidget {
-
   final Expense expense;
 
   ExpenseWidget({this.expense});
@@ -13,8 +12,8 @@ class ExpenseWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: EdgeInsets.only(top: 18,left: 18,right: 18,bottom: 10),
-      margin: EdgeInsets.only(left: 17,right: 17,top: 18),
+      padding: EdgeInsets.only(top: 18, left: 18, right: 18, bottom: 10),
+      margin: EdgeInsets.only(left: 17, right: 17, top: 18),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(1),
         borderRadius: BorderRadius.circular(18),
@@ -28,7 +27,7 @@ class ExpenseWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         _buildAmountDisplay(context),
-        _buildItemDisplay(context),  
+        _buildItemDisplay(context),
         _buildDateDisplay(context)
       ],
     );
@@ -46,11 +45,11 @@ class ExpenseWidget extends StatelessWidget {
             style: TextStyle(
               fontSize: 38,
               fontWeight: FontWeight.w600,
-              color: Color.fromRGBO(71 , 8, 154, 1),
+              color: Color.fromRGBO(71, 8, 154, 1),
             ),
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 7,left: 7),
+            margin: EdgeInsets.only(bottom: 7, left: 7),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -79,7 +78,8 @@ class ExpenseWidget extends StatelessWidget {
       child: Text(
         "${expense.itemDescription}",
         textAlign: TextAlign.justify,
-        style: GoogleFonts.ubuntu(textStyle: TextStyle(
+        style: GoogleFonts.ubuntu(
+            textStyle: TextStyle(
           color: Colors.black.withOpacity(0.8),
           fontSize: 17,
           fontWeight: FontWeight.w600,
@@ -102,7 +102,7 @@ class ExpenseWidget extends StatelessWidget {
               color: Color.fromRGBO(71, 8, 154, 1).withOpacity(0.8),
               borderRadius: BorderRadius.circular(18),
             ),
-            padding: EdgeInsets.symmetric(horizontal: 8,vertical: 2),
+            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
             child: Text(
               "$newDtHour $newDt",
               style: TextStyle(
@@ -115,5 +115,4 @@ class ExpenseWidget extends StatelessWidget {
       ),
     );
   }
-
 }

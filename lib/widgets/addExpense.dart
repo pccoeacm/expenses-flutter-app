@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AddExpenseWidget extends StatefulWidget {
-
   @override
   _AddExpenseWidgetState createState() => _AddExpenseWidgetState();
 }
@@ -19,16 +18,16 @@ class _AddExpenseWidgetState extends State<AddExpenseWidget> {
     return Container(
       height: double.infinity,
       width: double.infinity,
-      margin: EdgeInsets.only(top: 38,left: 28,right: 28, bottom: 28),
+      margin: EdgeInsets.only(top: 38, left: 28, right: 28, bottom: 28),
       child: Form(
         child: Column(
           children: [
             TextFormField(
-              onChanged: (value){
-                amount=double.parse(value);
+              onChanged: (value) {
+                amount = double.parse(value);
               },
-              onFieldSubmitted: (value){
-                amount=double.parse(value);
+              onFieldSubmitted: (value) {
+                amount = double.parse(value);
                 print(amount);
               },
               style: TextStyle(
@@ -38,24 +37,23 @@ class _AddExpenseWidgetState extends State<AddExpenseWidget> {
               cursorRadius: Radius.circular(18),
               keyboardType: TextInputType.phone,
               decoration: InputDecoration(
-                hintText: "Amount",
-                hintStyle: TextStyle(
-                  fontSize: 18,
-                ),
-                focusedBorder:UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color.fromRGBO(71, 8, 154, 1)
-                  )
-                ) 
-              ),
+                  hintText: "Amount",
+                  hintStyle: TextStyle(
+                    fontSize: 18,
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color.fromRGBO(71, 8, 154, 1)))),
             ),
-            SizedBox(height: 20,),
+            SizedBox(
+              height: 20,
+            ),
             TextFormField(
-              onChanged: (value){
-                item=value;
+              onChanged: (value) {
+                item = value;
               },
-              onFieldSubmitted: (value){
-                item=value;
+              onFieldSubmitted: (value) {
+                item = value;
                 print(item);
               },
               style: TextStyle(
@@ -65,36 +63,32 @@ class _AddExpenseWidgetState extends State<AddExpenseWidget> {
               cursorRadius: Radius.circular(18),
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                hintText: "Item Description",
-                hintStyle: TextStyle(
-                  fontSize: 18,
-                ),
-                focusedBorder:UnderlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Color.fromRGBO(71, 8, 154, 1)
-                  )
-                ) 
-              ),
+                  hintText: "Item Description",
+                  hintStyle: TextStyle(
+                    fontSize: 18,
+                  ),
+                  focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: Color.fromRGBO(71, 8, 154, 1)))),
             ),
             Expanded(child: Container()),
             Material(
               color: Color.fromRGBO(71, 8, 154, 1),
               borderRadius: BorderRadius.circular(18),
               child: InkWell(
-                onTap: (){
+                onTap: () {
                   if (amount == 0 || item == 'Empty') {
-                    _alertEmptyInput(amount == 0, item == 'Empty');
+                    _alertEmptyInput(amount == 0);
                   } else {
-                    _expenseListProvider.addToList(amount,item);
+                    _expenseListProvider.addToList(amount, item);
                     Navigator.pop(context);
                   }
                 },
                 child: Container(
                   height: 60,
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(18)
-                  ),
+                  decoration:
+                  BoxDecoration(borderRadius: BorderRadius.circular(18)),
                   child: Center(
                     child: Text(
                       "Add Expense",
@@ -113,7 +107,7 @@ class _AddExpenseWidgetState extends State<AddExpenseWidget> {
     );
   }
 
-  Future<void> _alertEmptyInput(hasAmount, hasMessage) async {
+  Future<void> _alertEmptyInput(hasAmount) async {
     String empty = '';
     if (hasAmount) {
       empty = 'amount';
