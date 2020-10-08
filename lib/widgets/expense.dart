@@ -1,6 +1,6 @@
 import 'package:Expense/models/expense.dart';
+import 'package:Expense/widgets/statefulText.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseWidget extends StatelessWidget {
@@ -40,14 +40,7 @@ class ExpenseWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Text(
-            "${expense.amount}",
-            style: TextStyle(
-              fontSize: 38,
-              fontWeight: FontWeight.w600,
-              color: Color.fromRGBO(71, 8, 154, 1),
-            ),
-          ),
+          StatefulText(value: expense, isAmount: true),
           Container(
             margin: EdgeInsets.only(bottom: 7, left: 7),
             child: Column(
@@ -75,16 +68,7 @@ class ExpenseWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 2),
       width: double.infinity,
-      child: Text(
-        "${expense.itemDescription}",
-        textAlign: TextAlign.justify,
-        style: GoogleFonts.ubuntu(
-            textStyle: TextStyle(
-          color: Colors.black.withOpacity(0.8),
-          fontSize: 17,
-          fontWeight: FontWeight.w600,
-        )),
-      ),
+      child: StatefulText(value: expense, isAmount: false),
     );
   }
 

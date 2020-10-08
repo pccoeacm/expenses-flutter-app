@@ -35,10 +35,7 @@ class HomePage extends StatelessWidget {
   Widget _buildDrawer(BuildContext context) {
     return Container(
       height: double.infinity,
-      width: MediaQuery
-          .of(context)
-          .size
-          .width / 1.4,
+      width: MediaQuery.of(context).size.width / 1.4,
       decoration: BoxDecoration(
         color: Color.fromRGBO(20, 20, 20, 1),
       ),
