@@ -1,7 +1,6 @@
 import 'dart:ui';
 
-import 'package:Expense/providers/expenses.dart';
-import 'package:Expense/providers/search.dart';
+import 'package:Expense/database/moor_database.dart';
 import 'package:Expense/widgets/addExpense.dart';
 import 'package:Expense/widgets/expense.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +48,6 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildAppBar(BuildContext context) {
-    final _searchProvider = Provider.of<Search>(context);
     return AppBar(
       backgroundColor: Color.fromRGBO(71, 8, 154, 1),
       title: Text(
@@ -60,16 +58,13 @@ class HomePage extends StatelessWidget {
       ),
       centerTitle: true,
       actions: [
-        IconButton(icon: Icon(Icons.search), onPressed: () => _searchProvider.toggleSearch()),
         IconButton(icon: Icon(Icons.mode_edit), onPressed: () => addExpense(context))
       ],
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    final _searchProvider = Provider.of<Search>(context);
-    final _expenseListProvider = Provider.of<Expenses>(context);
-    final _expenseTagList = _expenseListProvider.expenseList.expand((element) => element.tags).toSet();
+    final _expenseListProvider = Provider.of<AppDatabase>(context);
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -78,27 +73,7 @@ class HomePage extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _searchProvider.state != SearchState.Idle
-              ? Expanded(
-                  flex: 1,
-                  child: ListView.separated(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _expenseTagList.length,
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    separatorBuilder: (_, int index) => SizedBox(width: 8),
-                    itemBuilder: (_, int index) {
-                      String tag = _expenseTagList.elementAt(index);
-                      return InkWell(
-                        onTap: () => _searchProvider.tagSelected(tag),
-                        child: Chip(
-                          label: Text('#$tag'),
-                          backgroundColor: Colors.black.withOpacity(_searchProvider.queryTags.contains(tag) ? 0.6 : 0.1),
-                        ),
-                      );
-                    },
-                  ),
-                )
-              : SizedBox(),
+          SizedBox(),
           Expanded(
             flex: 10,
             child: _buildListView(context),
@@ -108,15 +83,20 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildListView(context) {
-    final _searchProvider = Provider.of<Search>(context);
-    final _expenseListProvider = Provider.of<Expenses>(context);
-    final List _expenseList = _expenseListProvider.getExpenseListFiltered(_searchProvider.queryTags);
-    return ListView.builder(
-      itemCount: _expenseList.length,
-      itemBuilder: (_,index){
-        return ExpenseWidget(expense: _expenseList[index],);
-      }
+  StreamBuilder<List<Expense>> _buildListView(context) {
+    final _expenseListProvider = Provider.of<AppDatabase>(context);
+    return StreamBuilder(
+      stream: _expenseListProvider.watchAllExpense(),
+      builder: (context,AsyncSnapshot<List<Expense>> snapshot){
+        final expenses=snapshot.data ?? List();
+
+        return ListView.builder(
+            itemCount: expenses.length,
+            itemBuilder: (_,index){
+              return ExpenseWidget(expense: expenses[index],);
+            }
+        );
+      },
     );
   }
 
