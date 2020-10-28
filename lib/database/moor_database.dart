@@ -18,5 +18,6 @@ class AppDatabase extends _$AppDatabase{
 
   Stream<List<Expense>> watchAllExpense()=>select(expenses).watch();
   Future<List<Expense>> getAllExpense()=>select(expenses).get();
-  Future insertExpense(Expense expen)=>into(expenses).insert(expen);
+  Future insertExpense(Expense expense)=>into(expenses).insert(expense);
+  Future deleteExpense(Expense expense)=>delete(expenses).delete(expense);
 }
