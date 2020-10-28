@@ -1,4 +1,4 @@
-import 'package:Expense/providers/expenses.dart';
+import 'package:Expense/database/moor_database.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ class _AddExpenseWidgetState extends State<AddExpenseWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final _expenseListProvider = Provider.of<Expenses>(context);
+    final _expenseListProvider = Provider.of<AppDatabase>(context);
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -85,7 +85,8 @@ class _AddExpenseWidgetState extends State<AddExpenseWidget> {
                   if (amount == 0 || item == 'Empty') {
                     _alertEmptyInput(amount == 0, item == 'Empty');
                   } else {
-                    _expenseListProvider.addToList(amount,item);
+                    // amount,item
+                    _expenseListProvider.insertExpense(new Expense(amount: amount, time: DateTime.now(), description: item));
                     Navigator.pop(context);
                   }
                 },

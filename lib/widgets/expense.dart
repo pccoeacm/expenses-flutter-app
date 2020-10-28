@@ -1,8 +1,7 @@
-
-import 'package:Expense/models/expense.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:Expense/database/moor_database.dart';
 
 class ExpenseWidget extends StatelessWidget {
   final Expense expense;
@@ -65,22 +64,6 @@ class ExpenseWidget extends StatelessWidget {
             ],
           ),
         ),
-        Expanded(
-          child: Container(
-            height: 50.0,
-            padding: EdgeInsets.only(bottom: 7, left: 7),
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: expense.tags.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Chip(label: Text(expense.tags[index])),
-                );
-              },
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -90,7 +73,7 @@ class ExpenseWidget extends StatelessWidget {
       margin: EdgeInsets.only(top: 2),
       width: double.infinity,
       child: Text(
-        "${expense.itemDescription}",
+        "${expense.description}",
         textAlign: TextAlign.justify,
         style: GoogleFonts.ubuntu(
             textStyle: TextStyle(

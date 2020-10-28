@@ -1,6 +1,5 @@
+import 'package:Expense/database/moor_database.dart';
 import 'package:Expense/pages/home.dart';
-import 'package:Expense/providers/expenses.dart';
-import 'package:Expense/providers/search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
@@ -18,8 +17,9 @@ class MyApp extends StatelessWidget {
     ]);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => Expenses()),
-        ChangeNotifierProvider(create: (_) => Search()),
+        Provider<AppDatabase>(
+          builder: (_)=>AppDatabase(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
