@@ -5,8 +5,9 @@ import 'package:Expense/database/moor_database.dart';
 
 class ExpenseWidget extends StatelessWidget {
   final Expense expense;
+  final expenseListProvider;
 
-  ExpenseWidget({this.expense});
+  ExpenseWidget({this.expense,this.expenseListProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -50,17 +51,27 @@ class ExpenseWidget extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 7, left: 7),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "RS",
-                style: TextStyle(
-                  fontSize: 18,
-                  letterSpacing: 1.2,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.black.withOpacity(0.6),
-                ),
-              )
+             Row(
+               children: [
+                 Text(
+                   "RS",
+                   style: TextStyle(
+                     fontSize: 18,
+                     letterSpacing: 1.2,
+                     fontWeight: FontWeight.w400,
+                     color: Colors.black.withOpacity(0.6),
+                   ),
+                 ),
+                 IconButton(
+                   icon: Icon(Icons.delete),
+                   onPressed: (){
+                     expenseListProvider.deleteExpense(expense);
+                   },
+                 )
+               ],
+             )
             ],
           ),
         ),

@@ -93,7 +93,7 @@ class HomePage extends StatelessWidget {
         return ListView.builder(
             itemCount: expenses.length,
             itemBuilder: (_,index){
-              return ExpenseWidget(expense: expenses[index],);
+              return ExpenseWidget(expense: expenses[index],expenseListProvider: _expenseListProvider,);
             }
         );
       },
